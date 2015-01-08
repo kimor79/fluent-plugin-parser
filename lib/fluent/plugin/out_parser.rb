@@ -8,6 +8,7 @@ class Fluent::ParserOutput < Fluent::Output
   config_param :add_prefix, :string, :default => nil
   config_param :key_name, :string
   config_param :reserve_data, :bool, :default => false
+  config_param :reserve_data_prefix, :string, :default => nil
   config_param :inject_key_prefix, :string, :default => nil
   config_param :replace_invalid_sequence, :bool, :default => false
   config_param :hash_value_field, :string, :default => nil
@@ -109,6 +110,9 @@ class Fluent::ParserOutput < Fluent::Output
     end
     r = @hash_value_field ? {@hash_value_field => values} : values
     if @reserve_data
+      if @reserve_data_prefix
+        record = Hash[record.map{|k,v| [ @reserve_data_prefix + k, v ]}]
+      end
       r = r ? record.merge(r) : record
     end
     if r

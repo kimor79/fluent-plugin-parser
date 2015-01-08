@@ -47,6 +47,17 @@ If you want original attribute-data pair in re-emitted message, specify 'reserve
       reserve_data yes
     </match>
 
+To prefix original attribute-data pair in re-emitted message, specify 'reserve_data_prefix':
+
+    <match raw.apache.*>
+      type parser
+      tag apache
+      format apache
+      key_name message
+      reserve_data yes
+      reserve_data_prefix @original:
+    </match>
+
 If you want to suppress 'pattern not match' log, specify 'suppress\_parse\_error\_log true' to configuration.
 default value is false.
 
